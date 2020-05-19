@@ -1,7 +1,5 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutterapp/DataBaseLite.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'Expense.dart';
 

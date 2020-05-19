@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/AddExpense.dart';
 import 'package:flutterapp/ExpensesModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutterapp/EditExpense.dart';
@@ -204,7 +203,7 @@ class MyHomePage extends StatelessWidget {
                    context,
                    MaterialPageRoute(
                      builder: (context){
-                       return AddExpense(model);
+                       return EditExpense(model, -1);
                      }
                    )
                );

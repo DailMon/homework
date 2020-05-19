@@ -13,10 +13,31 @@ class _EditExpenseState extends State<EditExpense>{
 
   _EditExpenseState(this._model, this._index);
 
+
   @override
   Widget build(BuildContext context) {
+    String initName;
+    String initPrice;
+    DateTime initTime;
+    String barName;
+    String buttonName;
+
+    if (_index == -1){
+      initName = null;
+      initPrice = "0";
+      initTime = DateTime.now();
+      barName = "Add Expense";
+      buttonName = "Add";
+    }
+    else{
+      initName = _model.getName(_index);
+      initPrice = _model.getPrice(_index);
+      initTime = _model.getTime(_index);
+      barName = "Edit Expense";
+      buttonName = "Edit";
+    }
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Expense")),
+      appBar: AppBar(title: Text(barName)),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Form(
@@ -24,7 +45,7 @@ class _EditExpenseState extends State<EditExpense>{
           child: Column(
             children: <Widget>[
               TextFormField(
-                initialValue: _model.getName(_index),
+                initialValue: initName,
                 onSaved: (value){
                   _name = value;
                 },
@@ -35,7 +56,7 @@ class _EditExpenseState extends State<EditExpense>{
               ),
               TextFormField(
                 autovalidate: true,
-                initialValue: _model.getPrice(_index),
+                initialValue: initPrice,
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (double.tryParse(value) != null){
@@ -53,7 +74,7 @@ class _EditExpenseState extends State<EditExpense>{
                 ),
               ),
               DateTimeFormField(
-                initialValue: _model.getTime(_index),
+                initialValue: initTime,
                 label: "Date and Time *",
                 autovalidate: true,
                 validator: (value) {
@@ -71,11 +92,15 @@ class _EditExpenseState extends State<EditExpense>{
                 onPressed: () {
                   if (_formKey.currentState.validate()){
                     _formKey.currentState.save();
-                    _model.editExpense(_name, _price, _time, _index);
+                    if (_index == -1){
+                      _model.addExpense(_name, _price, _time);
+                    } else {
+                      _model.editExpense(_name, _price, _time, _index);
+                    }
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Edit"),
+                child: Text(buttonName),
               )
             ],
           ),
